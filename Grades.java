@@ -25,13 +25,22 @@ public class Grades {
         for (int i = 0; i < numberOfStudents; i++) {
             System.out.println("\nStudent " + (i + 1));
             for (int j = 0; j < numberOfSubjects; j++) {
-                System.out.print("Enter the grade for " + subjects[j] + ": ");
-                studentGrades[i][j] = scanner.nextDouble();
+                System.out.println("Enter the grades for " + subjects[j] + " (separated by space): ");
+                String[] gradesInput = scanner.nextLine().split("\\s+");
+                int numberOfGrades = gradesInput.length;
+                double sumOfGrades = 0;
+                for (String grade : gradesInput) {
+                    sumOfGrades += Double.parseDouble(grade);
+                }
+                studentGrades[i][j] = sumOfGrades / numberOfGrades;
             }
         }
 
         for (int i = 0; i < numberOfStudents; i++) {
-            System.out.println("\nAverage grade for student " + (i + 1) + ": " + calculateAverage(studentGrades[i]));
+            System.out.println("\nAverage grades for student " + (i + 1) + ":");
+            for (int j = 0; j < numberOfSubjects; j++) {
+                System.out.println(subjects[j] + ": " + studentGrades[i][j]);
+            }
         }
 
         scanner.close();
