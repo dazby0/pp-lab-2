@@ -15,7 +15,7 @@ public class Grades {
 
         System.out.print("Enter the number of students: ");
         int numberOfStudents = scanner.nextInt();
-        scanner.nextLine(); // Consumes the newline character left by nextInt()
+        scanner.nextLine(); 
 
         final int numberOfSubjects = 3;
         double[][] studentGrades = new double[numberOfStudents][numberOfSubjects];
