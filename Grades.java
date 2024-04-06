@@ -39,6 +39,16 @@ public class Grades {
                 enterGradesForStudent(grades, scanner);
                 studentGrades[i][j] = calculateAverage(grades);
             }
+            
+            // Print all grades for each subject for this student
+            System.out.println("\nGrades for each subject for Student " + (i + 1) + ":");
+            for (int j = 0; j < numberOfSubjects; j++) {
+                System.out.print(subjects[j] + ": ");
+                for (int k = 0; k < studentGrades[i].length; k++) {
+                    System.out.print(studentGrades[i][k] + " ");
+                }
+                System.out.println();
+            }
         }
 
         System.out.println("\nAverage grades for each subject for each student:");
