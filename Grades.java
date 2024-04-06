@@ -9,6 +9,18 @@ public class Grades {
         }
         return sumOfGrades / grades.length;
     }
+    
+    public static void enterGrades(Scanner scanner, double[] studentGrades, String subject) {
+        System.out.println("Enter the grades for " + subject + " (separated by space): ");
+        String input = scanner.nextLine().trim(); // Usuwa białe znaki z końca
+        if (input.endsWith(" ")) {
+            input = input.substring(0, input.length() - 1); // Usuwa ostatnią spację
+        }
+        String[] gradesInput = input.split("\\s+");
+        for (int i = 0; i < gradesInput.length; i++) {
+            studentGrades[i] = Double.parseDouble(gradesInput[i]);
+        }
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -25,21 +37,14 @@ public class Grades {
         for (int i = 0; i < numberOfStudents; i++) {
             System.out.println("\nStudent " + (i + 1));
             for (int j = 0; j < numberOfSubjects; j++) {
-                System.out.println("Enter the grades for " + subjects[j] + " (separated by space): ");
-                String[] gradesInput = scanner.nextLine().split("\\s+");
-                int numberOfGrades = gradesInput.length;
-                double sumOfGrades = 0;
-                for (String grade : gradesInput) {
-                    sumOfGrades += Double.parseDouble(grade);
-                }
-                studentGrades[i][j] = sumOfGrades / numberOfGrades;
+                enterGrades(scanner, studentGrades[i], subjects[j]);
             }
         }
 
         for (int i = 0; i < numberOfStudents; i++) {
             System.out.println("\nAverage grades for student " + (i + 1) + ":");
             for (int j = 0; j < numberOfSubjects; j++) {
-                System.out.println(subjects[j] + ": " + studentGrades[i][j]);
+                System.out.println(subjects[j] + ": " + calculateAverage(studentGrades[i]));
             }
         }
 
