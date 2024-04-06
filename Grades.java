@@ -10,10 +10,38 @@ public class Grades {
         return sumOfGrades / grades.length;
     }
 
-    public static void enterGradesForStudent(double[] studentGrades, Scanner scanner) {
+    public static void enterGradesForStudent(double[][][] studentGrades, Scanner scanner, int studentIndex, String[] subjects) {
+        for (int j = 0; j < studentGrades[studentIndex].length; j++) {
+            System.out.print("Enter the number of grades for " + subjects[j] + ": ");
+            int numGrades = scanner.nextInt();
+            double[] grades = new double[numGrades];
+            System.out.println("Enter grades for " + subjects[j] + ":");
+            for (int k = 0; k < numGrades; k++) {
+                double grade;
+                do {
+                    System.out.print("Grade " + (k + 1) + ": ");
+                    grade = scanner.nextDouble();
+                    if (grade <= 0 || grade > 6) {
+                        System.out.println("Grade must be positive and equal or less than 6. Please enter again.");
+                    }
+                } while (grade <= 0 || grade > 6);
+                grades[k] = grade;
+            }
+            studentGrades[studentIndex][j] = grades;
+        }
+    }
+
+    public static void printEnteredGrades(double[][][] studentGrades, String[] subjects) {
+        System.out.println("\nList of entered grades for each student for each subject:");
         for (int i = 0; i < studentGrades.length; i++) {
-            System.out.print("Enter grade for subject " + (i + 1) + ": ");
-            studentGrades[i] = scanner.nextDouble();
+            System.out.println("\nStudent " + (i + 1));
+            for (int j = 0; j < studentGrades[i].length; j++) {
+                System.out.println(subjects[j] + ": ");
+                for (double grade : studentGrades[i][j]) {
+                    System.out.print(grade + " ");
+                }
+                System.out.println();
+            }
         }
     }
 
@@ -25,39 +53,24 @@ public class Grades {
         scanner.nextLine();
 
         final int numberOfSubjects = 3;
-        double[][] studentGrades = new double[numberOfStudents][numberOfSubjects];
+        double[][][] studentGrades = new double[numberOfStudents][numberOfSubjects][];
 
         String[] subjects = {"mathematics", "physics", "chemistry"};
 
         for (int i = 0; i < numberOfStudents; i++) {
             System.out.println("\nStudent " + (i + 1));
-            for (int j = 0; j < numberOfSubjects; j++) {
-                System.out.print("Enter the number of grades for " + subjects[j] + ": ");
-                int numGrades = scanner.nextInt();
-                double[] grades = new double[numGrades];
-                System.out.println("Enter grades for " + subjects[j] + ":");
-                enterGradesForStudent(grades, scanner);
-                studentGrades[i][j] = calculateAverage(grades);
-            }
-            
-            System.out.println("\nGrades for each subject for Student " + (i + 1) + ":");
-            for (int j = 0; j < numberOfSubjects; j++) {
-                System.out.print(subjects[j] + ": ");
-                for (int k = 0; k < studentGrades[i].length; k++) {
-                    System.out.print(studentGrades[i][k] + " ");
-                }
-                System.out.println();
-            }
+            enterGradesForStudent(studentGrades, scanner, i, subjects);
         }
 
         System.out.println("\nAverage grades for each subject for each student:");
         for (int i = 0; i < numberOfStudents; i++) {
             System.out.println("\nStudent " + (i + 1));
             for (int j = 0; j < numberOfSubjects; j++) {
-                System.out.println(subjects[j] + ": " + studentGrades[i][j]);
+                System.out.println(subjects[j] + ": " + calculateAverage(studentGrades[i][j]));
             }
-            System.out.println("Average grade: " + calculateAverage(studentGrades[i]));
         }
+
+        printEnteredGrades(studentGrades, subjects);
 
         scanner.close();
     }
