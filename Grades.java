@@ -40,7 +40,6 @@ public class Grades {
                 studentGrades[i][j] = calculateAverage(grades);
             }
             
-            // Print all grades for each subject for this student
             System.out.println("\nGrades for each subject for Student " + (i + 1) + ":");
             for (int j = 0; j < numberOfSubjects; j++) {
                 System.out.print(subjects[j] + ": ");
