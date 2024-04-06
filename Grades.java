@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Grades {
@@ -8,6 +9,16 @@ public class Grades {
             sumOfGrades += grade;
         }
         return sumOfGrades / grades.length;
+    }
+
+    public static double calculateMedian(double[] grades) {
+        Arrays.sort(grades);
+        int middle = grades.length / 2;
+        if (grades.length % 2 == 0) {
+            return (grades[middle - 1] + grades[middle]) / 2.0;
+        } else {
+            return grades[middle];
+        }
     }
 
     public static void enterGradesForStudent(double[][][] studentGrades, Scanner scanner, int studentIndex, String[] subjects) {
@@ -40,7 +51,7 @@ public class Grades {
                 for (double grade : studentGrades[i][j]) {
                     System.out.print(grade + " ");
                 }
-                System.out.println();
+                System.out.println("\nMedian: " + calculateMedian(studentGrades[i][j])); // Print median
             }
         }
     }
